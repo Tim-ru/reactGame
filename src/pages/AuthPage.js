@@ -1,6 +1,5 @@
 import React from 'react'
-import 'materialize-css/dist/css/materialize.min.css'
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class AuthPage extends React.Component {
     constructor(props) {

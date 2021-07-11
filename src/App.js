@@ -8,7 +8,7 @@ import {
 import './styles/App.css'
 import AuthPage from './pages/AuthPage'
 import GamePage from './pages/GamePage'
-import StartPage from './pages/StartPage.jsx'
+import StartPage from './pages/StartPage'
 
 
 class App extends React.Component {
