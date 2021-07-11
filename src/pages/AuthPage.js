@@ -8,7 +8,7 @@ class AuthPage extends React.Component {
 
         this.state = {
             isAuthenticated: false,
-            isAuth: false,
+            isLogin: false,
             name: '',
             email: '',
             password: '',
@@ -55,7 +55,7 @@ class AuthPage extends React.Component {
                 password: this.state.password,
                 access_token: result.data.access_token
             }))
-            this.setState({ isAuth: true })
+            this.setState({ isLogin: true })
         }
     }
 
@@ -84,7 +84,7 @@ class AuthPage extends React.Component {
     render() {
         return (
             <div className="row">
-                {(this.state.isAuth) ? <Redirect to='/game' /> :
+                {(this.state.isLogin) ? <Redirect to='/start' /> :
                     <div className="col s6 offset-s3">
                         <div className="card blue-grey darken-1">
                             <div className="card-content white-text">

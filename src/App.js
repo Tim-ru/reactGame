@@ -8,6 +8,7 @@ import {
 import './styles/App.css'
 import AuthPage from './pages/AuthPage'
 import GamePage from './pages/GamePage'
+import StartPage from './pages/StartPage.jsx'
 
 
 class App extends React.Component {
@@ -17,6 +18,9 @@ class App extends React.Component {
         <Switch>
           <Route path="/auth" exact>
             <AuthPage />
+          </Route>
+          <Route path="/start">
+            <StartPage />
           </Route>
           <Route path="/game">
             <GamePage />
