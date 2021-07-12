@@ -9,6 +9,7 @@ import './styles/App.css'
 import AuthPage from './pages/AuthPage'
 import GamePage from './pages/GamePage'
 import StartPage from './pages/StartPage'
+import ResultPage from './pages/ResultPage'
 
 
 class App extends React.Component {
@@ -24,6 +25,9 @@ class App extends React.Component {
           </Route>
           <Route path="/game">
             <GamePage />
+          </Route>
+          <Route path="/result">
+            <ResultPage />
           </Route>
           <Redirect to='/auth'/>
         </Switch>

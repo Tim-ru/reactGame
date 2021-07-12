@@ -12,6 +12,7 @@ class AuthPage extends React.Component {
             email: '',
             password: '',
             password_confirmation: '',
+            errors: '',
         }
     }
 
@@ -36,6 +37,7 @@ class AuthPage extends React.Component {
     }
 
     login = async () => {
+        document.querySelector('.validateError').style.display = 'none'
         let response = await fetch('https://internsapi.public.osora.ru/api/auth/login', {
             method: 'POST',
             headers: {
@@ -56,9 +58,24 @@ class AuthPage extends React.Component {
             }))
             this.setState({ isLogin: true })
         }
+        if (result.errors) {
+            console.log(result.errors);
+            this.setState({ errors: result.errors })
+            document.querySelector('.validateError').style.display = 'block'
+            if (result.errors.password) {
+                document.querySelector('.validateError').textContent = 'Поле password не заполнено!'
+            }
+            if (result.errors.email) {
+                document.querySelector('.validateError').textContent = result.errors.email
+            }
+            if (result.errors) {
+                document.querySelector('.validateError').textContent = result.errors
+            }
+        }
     }
 
     registration = async () => {
+        document.querySelector('.validateError').style.display = 'none'
         let response = await fetch('https://internsapi.public.osora.ru/api/auth/signup', {
             method: 'POST',
             headers: {
@@ -76,104 +93,121 @@ class AuthPage extends React.Component {
         if (result.status) {
             this.setState({ isAuthenticated: true })
         }
+        if (result.errors) {
+            console.log(result.errors);
+            this.setState({ errors: result.errors })
+            document.querySelector('.validateError').style.display = 'block'
+            if (result.errors.name) {
+                document.querySelector('.validateError').textContent = 'Поле name не заполнено!'
+            }
+            if (result.errors.email) {
+                document.querySelector('.validateError').textContent = result.errors.email
+            }
+            if (result.errors.password) {
+                document.querySelector('.validateError').textContent = 'Поле password не заполнено!'
+            }
+            if (this.state.password != this.state.password_confirmation) {
+                document.querySelector('.validateError').textContent = 'Пароли не совпадают!'
+            }
+        }
+
     }
 
 
 
     render() {
         return (
-            <div className="row">
+            <div className="container">
                 {(this.state.isLogin) ? <Redirect to='/start' /> :
-                    <div className="col s6 offset-s3">
-                        <div className="card blue-grey darken-1">
-                            <div className="card-content white-text">
-                                {(this.state.isAuthenticated) ?
-                                    <div>
-                                        <span className="card-title">Авторизация</span>
-                                        <div>
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Введите email"
-                                                    id="email"
-                                                    type="email"
-                                                    className="validate"
-                                                    name="email"
-                                                    onChange={this.handleChangeEmail}
-                                                />
-                                            </div>
-
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Введите пароль"
-                                                    id="password"
-                                                    type="password"
-                                                    className="validate"
-                                                    name="password"
-                                                    onChange={this.handleChangePassword}
-                                                />
-                                            </div>
-                                            <span>Нет аккаунта? <a style={{ cursor: 'pointer' }} onClick={this.changeFormsHandler}>
-                                                Регистрация
-                                            </a></span>
-                                        </div>
-                                        <div className="card-action">
-                                            <button className="btn blue-grey lighten-1" onClick={this.login}>Вход</button>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div>
-                                        <span className="card-title">Регистрация</span>
-                                        <div>
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Введите name"
-                                                    className="validate"
-                                                    name="name"
-                                                    onChange={this.handleChangeName}
-                                                />
-                                            </div>
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Введите email"
-                                                    id="email"
-                                                    type="email"
-                                                    className="validate"
-                                                    name="email"
-                                                    onChange={this.handleChangeEmail}
-                                                />
-                                            </div>
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Введите пароль"
-                                                    type="password"
-                                                    className="validate"
-                                                    name="password"
-                                                    onChange={this.handleChangePassword}
-                                                />
-                                            </div>
-                                            <div className="input-field">
-                                                <input
-                                                    placeholder="Подтвердите пароль"
-                                                    type="password"
-                                                    className="validate"
-                                                    name="passwordConfirm"
-                                                    onChange={this.handleChangePasswordConfirm}
-                                                />
-                                            </div>
-                                        </div>
-                                        <span>Есть аккаунт? <a style={{ cursor: 'pointer' }} onClick={this.changeFormsHandler}>Войдите</a></span>
-                                        <div className="card-action">
-                                            <button className="btn teal lighten-2" onClick={this.registration}>Регистрация</button>
-                                        </div>
+                    <div className="authentication">
+                        {(this.state.isAuthenticated) ?
+                            <div className="card">
+                                <div className="validateError"></div>
+                                <span className="card-title">Авторизация</span>
+                                <div>
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Введите email"
+                                            id="email"
+                                            type="email"
+                                            className="validate"
+                                            name="email"
+                                            onChange={this.handleChangeEmail}
+                                        />
                                     </div>
 
-                                }
-
-
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Введите пароль"
+                                            id="password"
+                                            type="password"
+                                            className="validate"
+                                            name="password"
+                                            onChange={this.handleChangePassword}
+                                        />
+                                    </div>
+                                    <span>Нет аккаунта? <a style={{ cursor: 'pointer' }} onClick={this.changeFormsHandler}>
+                                        Регистрация
+                                    </a></span>
+                                </div>
+                                <div className="card-action">
+                                    <button className="btn blue-grey lighten-1" onClick={this.login}>Вход</button>
+                                </div>
                             </div>
-
-
-                        </div>
+                            :
+                            <div className="card">
+                                <div className="validateError"></div>
+                                <span className="card-title">Регистрация</span>
+                                <div>
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Введите name"
+                                            className="validate"
+                                            name="name"
+                                            onChange={this.handleChangeName}
+                                        />
+                                    </div>
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Введите email"
+                                            id="email"
+                                            type="email"
+                                            className="validate"
+                                            name="email"
+                                            onChange={this.handleChangeEmail}
+                                        />
+                                    </div>
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Введите пароль"
+                                            type="password"
+                                            className="validate"
+                                            name="password"
+                                            onChange={this.handleChangePassword}
+                                        />
+                                    </div>
+                                    <div className="input-field">
+                                        <input
+                                            placeholder="Подтвердите пароль"
+                                            type="password"
+                                            className="validate"
+                                            name="passwordConfirm"
+                                            onChange={this.handleChangePasswordConfirm}
+                                        />
+                                    </div>
+                                </div>
+                                <button className="btn" onClick={this.registration}>Регистрация</button>
+                                <div className="changeFormField">
+                                    <span>Есть аккаунт?
+                                        <a
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={this.changeFormsHandler}>
+                                            Войдите
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        }
                     </div>
                 }
             </div>

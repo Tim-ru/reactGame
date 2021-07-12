@@ -34,6 +34,8 @@ class StartPage extends React.Component {
 
         let result = await response.json();
         if (result.status) {
+            localStorage.setItem('startQuestions', JSON.stringify(result.data))
+            localStorage.setItem('type_hard', JSON.stringify(this.state.type_hard))
             this.setState({ diffChoosen: true })
         }
     }
@@ -42,8 +44,8 @@ class StartPage extends React.Component {
         return (
             <div className="input-field" >
                 {(this.state.diffChoosen) ? <Redirect to='/game' /> :
-                    <div>
-                        <select value={this.state.type_hard} onChange={this.changeHandler}>
+                    <div className="selectField">
+                        <select value={this.state.type_hard} onChange={this.changeHandler} required>
                             <option disabled value="0">Сложность</option>
                             <option value="1">Легко</option>
                             <option value="2">Сложно</option>
