@@ -1,6 +1,5 @@
-# https://tim-ru.github.io/reactGame/
-
 # Getting Started with Create React App
+https://tim-ru.github.io/reactGame/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
